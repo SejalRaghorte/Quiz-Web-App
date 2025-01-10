@@ -1,1 +1,23 @@
 <!-- Quiz Page for users -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <div id="quiz-container">
+    <h1 id="question"></h1>
+    <div id="options"></div>
+    <p id="status"></p>
+  </div>
+  <div id="score-container" style="display: none;">
+    <h2>Your Score: <span id="final-score"></span></h2>
+    <button id="share-btn">Share</button>
+    <button onclick="window.location.href='login.html';">Logout</button>
+  </div>
+  <script src="assets/js/user.js"></script>
+</body>
+</html>
