@@ -1,1 +1,115 @@
-
+{
+    "questions": [
+      {
+        "id": 1,
+        "question": "What is the capital of France?",
+        "options": [
+          "Berlin",
+          "Madrid",
+          "Paris",
+          "Lisbon"
+        ],
+        "correct": "Paris"
+      },
+      {
+        "id": 2,
+        "question": "Who is the author of 'Pride and Prejudice'?",
+        "options": [
+          "Mark Twain",
+          "Jane Austen",
+          "Charles Dickens",
+          "George Orwell"
+        ],
+        "correct": "Jane Austen"
+      },
+      {
+        "id": 3,
+        "question": "Which planet is known as the Red Planet?",
+        "options": [
+          "Earth",
+          "Mars",
+          "Jupiter",
+          "Venus"
+        ],
+        "correct": "Mars"
+      },
+      {
+        "id": 4,
+        "question": "What is the largest ocean on Earth?",
+        "options": [
+          "Atlantic Ocean",
+          "Indian Ocean",
+          "Pacific Ocean",
+          "Arctic Ocean"
+        ],
+        "correct": "Pacific Ocean"
+      },
+      {
+        "id": 5,
+        "question": "Who painted the Mona Lisa?",
+        "options": [
+          "Vincent Van Gogh",
+          "Pablo Picasso",
+          "Leonardo da Vinci",
+          "Claude Monet"
+        ],
+        "correct": "Leonardo da Vinci"
+      },
+      {
+        "id": 6,
+        "question": "What is the square root of 64?",
+        "options": [
+          "6",
+          "8",
+          "10",
+          "12"
+        ],
+        "correct": "8"
+      },
+      {
+        "id": 7,
+        "question": "What is the chemical symbol for water?",
+        "options": [
+          "O2",
+          "H2O",
+          "CO2",
+          "NaCl"
+        ],
+        "correct": "H2O"
+      },
+      {
+        "id": 8,
+        "question": "Which is the smallest prime number?",
+        "options": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "correct": "2"
+      },
+      {
+        "id": 9,
+        "question": "What is the name of the longest river in the world?",
+        "options": [
+          "Amazon",
+          "Nile",
+          "Yangtze",
+          "Mississippi"
+        ],
+        "correct": "Nile"
+      },
+      {
+        "id": 10,
+        "question": "Which country is known as the Land of the Rising Sun?",
+        "options": [
+          "China",
+          "Japan",
+          "South Korea",
+          "Thailand"
+        ],
+        "correct": "Japan"
+      }
+    ]
+  }
+  
