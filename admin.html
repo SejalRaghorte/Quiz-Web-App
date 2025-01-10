@@ -9,17 +9,38 @@
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1 class="text-center mt-5">Admin Dashboard</h1>
-        <button id="logout" class="btn btn-secondary mt-3">Logout</button>
-        
-        <h2 class="mt-5">Manage Questions</h2>
-        <div id="question-list" class="mt-3"></div>
-        <button id="add-question" class="btn btn-primary mt-3">Add New Question</button>
-        
-        <h2 class="mt-5">User Scores</h2>
-        <div id="user-scores" class="mt-3"></div>
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="#" class="navbar-brand">Quiz Master App</a>
+            <div class="navbar-links">
+                <a href="#">About</a>
+                <a href="#">Profile</a>
+                <a href="#" id="logout">Logout</a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="admin-container">
+        <div class="questions-section">
+            <h2>Manage Questions</h2>
+            <div id="question-list"></div>
+            <button id="add-question" class="btn btn-primary mt-3">Add New Question</button>
+        </div>
+        <div class="scores-section">
+            <h2>User Scores</h2>
+            <table class="scores-table">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Score</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody id="user-scores"></tbody>
+            </table>
+        </div>
     </div>
     <script src="assets/js/admin.js"></script>
 </body>
 </html>
+
