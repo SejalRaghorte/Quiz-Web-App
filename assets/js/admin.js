@@ -1,4 +1,3 @@
-// Admin Logic
 let questions = [];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -10,13 +9,22 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function loadQuestions() {
-    fetch('data/questions.json')
-        .then(response => response.json())
-        .then(data => {
-            questions = data;
-            displayQuestions();
-        })
-        .catch(error => console.error('Error loading questions:', error));
+    const storedQuestions = localStorage.getItem('questions');
+    if (storedQuestions) {
+        questions = JSON.parse(storedQuestions);
+    } else {
+        fetch('data/questions.json')
+            .then(response => response.json())
+            .then(data => {
+                questions = data;
+                saveQuestions();
+            })
+            .catch(error => {
+                console.error('Error loading questions:', error);
+                alert('Error loading questions. Please try again.');
+            });
+    }
+    displayQuestions();
 }
 
 function displayQuestions() {
@@ -24,12 +32,16 @@ function displayQuestions() {
     questionList.innerHTML = '';
     questions.forEach((question, index) => {
         const questionDiv = document.createElement('div');
+        questionDiv.className = 'card mb-3';
         questionDiv.innerHTML = `
-            <p><strong>Question ${index + 1}:</strong> ${question.question}</p>
-            <p><strong>Options:</strong> ${question.options.join(', ')}</p>
-            <p><strong>Correct Answer:</strong> ${question.answer}</p>
-            <button onclick="editQuestion(${index})" class="btn btn-warning btn-sm me-2">Edit</button>
-            <button onclick="deleteQuestion(${index})" class="btn btn-danger btn-sm">Delete</button>
+            <div class="card-body">
+                <h5 class="card-title">Question ${index + 1}</h5>
+                <p class="card-text">${question.question}</p>
+                <p><strong>Options:</strong> ${question.options.join(', ')}</p>
+                <p><strong>Correct Answer:</strong> ${question.answer}</p>
+                <button onclick="editQuestion(${index})" class="btn btn-warning btn-sm me-2">Edit</button>
+                <button onclick="deleteQuestion(${index})" class="btn btn-danger btn-sm">Delete</button>
+            </div>
         `;
         questionList.appendChild(questionDiv);
     });
@@ -37,13 +49,18 @@ function displayQuestions() {
 
 function addNewQuestion() {
     const question = prompt('Enter the question:');
-    const options = prompt('Enter options (comma-separated):').split(',').map(option => option.trim());
+    const options = prompt('Enter options (comma-separated):');
     const answer = prompt('Enter the correct answer:');
 
-    if (question && options.length > 1 && answer) {
-        questions.push({ question, options, answer });
-        saveQuestions();
-        displayQuestions();
+    if (question && options && answer) {
+        const optionsArray = options.split(',').map(option => option.trim());
+        if (optionsArray.length > 1 && optionsArray.includes(answer)) {
+            questions.push({ question, options: optionsArray, answer });
+            saveQuestions();
+            displayQuestions();
+        } else {
+            alert('Invalid input. Please ensure you have at least two options and the answer is one of the options.');
+        }
     } else {
         alert('Invalid input. Please try again.');
     }
@@ -51,13 +68,18 @@ function addNewQuestion() {
 
 function editQuestion(index) {
     const question = prompt('Edit the question:', questions[index].question);
-    const options = prompt('Edit options (comma-separated):', questions[index].options.join(',')).split(',').map(option => option.trim());
+    const options = prompt('Edit options (comma-separated):', questions[index].options.join(','));
     const answer = prompt('Edit the correct answer:', questions[index].answer);
 
-    if (question && options.length > 1 && answer) {
-        questions[index] = { question, options, answer };
-        saveQuestions();
-        displayQuestions();
+    if (question && options && answer) {
+        const optionsArray = options.split(',').map(option => option.trim());
+        if (optionsArray.length > 1 && optionsArray.includes(answer)) {
+            questions[index] = { question, options: optionsArray, answer };
+            saveQuestions();
+            displayQuestions();
+        } else {
+            alert('Invalid input. Please ensure you have at least two options and the answer is one of the options.');
+        }
     } else {
         alert('Invalid input. No changes were made.');
     }
@@ -72,9 +94,7 @@ function deleteQuestion(index) {
 }
 
 function saveQuestions() {
-    // In a real application, you would send this data to a server
-    // For this example, we'll just log it to the console
-    console.log('Saving questions:', questions);
+    localStorage.setItem('questions', JSON.stringify(questions));
 }
 
 function displayUserScores() {
@@ -90,3 +110,4 @@ function logout() {
     localStorage.removeItem('currentUser');
     window.location.href = 'login.html';
 }
+

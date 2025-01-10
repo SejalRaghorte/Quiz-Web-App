@@ -1,73 +1,44 @@
-// Core Logic: SignUp /Login
-
 document.addEventListener('DOMContentLoaded', () => {
-    const signupForm = document.getElementById('signup-form');
-    const loginForm = document.getElementById('login-form');
+    checkAuth();
 
-    if (signupForm) {
-        signupForm.addEventListener('submit', handleSignup);
+    const startQuizButton = document.getElementById('start-quiz');
+    if (startQuizButton) {
+        startQuizButton.addEventListener('click', startQuiz);
     }
 
-    if (loginForm) {
-        loginForm.addEventListener('submit', handleLogin);
+    const logoutButton = document.getElementById('logout');
+    if (logoutButton) {
+        logoutButton.addEventListener('click', logout);
     }
+
+    displayWelcomeMessage();
 });
 
-function handleSignup(e) {
-    e.preventDefault();
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-    const role = document.getElementById('role').value;
-
-    if (!username || !password || !role) {
-        alert('All fields are required!');
-        return;
+function checkAuth() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (!currentUser) {
+        window.location.href = 'login.html';
     }
+}
 
-    if (role === 'user' && password.length < 6) {
-        alert('User password should be at least 6 characters long.');
-        return;
-    }
+function startQuiz() {
+    const questionCount = document.getElementById('question-count').value;
+    localStorage.setItem('questionCount', questionCount);
+    window.location.href = 'quiz.html';
+}
 
-    if (role === 'admin' && !isValidAdminPassword(password)) {
-        alert('Admin password should include at least 1 uppercase letter, 1 lowercase letter, 1 number, and be at least 8 characters long.');
-        return;
-    }
-
-    const users = JSON.parse(localStorage.getItem('users')) || [];
-    if (users.some(user => user.username === username)) {
-        alert('Username already exists. Please choose a different one.');
-        return;
-    }
-
-    users.push({ username, password, role });
-    localStorage.setItem('users', JSON.stringify(users));
-    alert('Sign-up successful! Please log in.');
+function logout() {
+    localStorage.removeItem('currentUser');
     window.location.href = 'login.html';
 }
 
-function handleLogin(e) {
-    e.preventDefault();
-    const username = document.getElementById('login-username').value;
-    const password = document.getElementById('login-password').value;
-    const role = document.getElementById('login-role').value;
-
-    const users = JSON.parse(localStorage.getItem('users')) || [];
-    const user = users.find(u => u.username === username && u.password === password && u.role === role);
-
-    if (user) {
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        if (role === 'user') {
-            window.location.href = 'main.html';
-        } else {
-            window.location.href = 'admin.html';
-        }
-    } else {
-        alert('Invalid credentials. Please try again.');
+function displayWelcomeMessage() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (currentUser) {
+        const welcomeMessage = document.createElement('p');
+        welcomeMessage.textContent = `Welcome, ${currentUser.username}!`;
+        welcomeMessage.className = 'text-center mt-3';
+        document.querySelector('.card-body').prepend(welcomeMessage);
     }
 }
 
-function isValidAdminPassword(password) {
-    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-    return regex.test(password);
-}
