@@ -32,7 +32,7 @@ function handleSignup(e) {
         return;
     }
 
-    users.push({ username, password, role });
+    users.push({ username, password, role, isAllowed: false });
     localStorage.setItem('users', JSON.stringify(users));
     alert('Sign-up successful! Please log in.');
     window.location.href = 'login.html';

@@ -1,10 +1,14 @@
 let questions = [];
+let users = [];
 
 document.addEventListener('DOMContentLoaded', () => {
     loadQuestions();
+    loadUsers();
     displayUserScores();
+    displayUsers();
 
-    document.getElementById('logout').addEventListener('click', logout);
+    document.getElementById('logout-top').addEventListener('click', logout);
+    document.getElementById('logout-bottom').addEventListener('click', logout);
     document.getElementById('add-question').addEventListener('click', addNewQuestion);
 });
 
@@ -106,8 +110,45 @@ function displayUserScores() {
     userScores.innerHTML = scores || '<p>No scores available.</p>';
 }
 
+function loadUsers() {
+    users = JSON.parse(localStorage.getItem('users')) || [];
+}
+
+function displayUsers() {
+    const userList = document.getElementById('user-list');
+    userList.innerHTML = '';
+    users.forEach((user, index) => {
+        if (user.role === 'user') {
+            const userDiv = document.createElement('div');
+            userDiv.className = 'card mb-3';
+            userDiv.innerHTML = `
+                <div class="card-body">
+                    <h5 class="card-title">${user.username}</h5>
+                    <p class="card-text">User ID: ${index}</p>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="user-toggle-${index}" 
+                               ${user.isAllowed ? 'checked' : ''}>
+                        <label class="form-check-label" for="user-toggle-${index}">
+                            Allow to take test
+                        </label>
+                    </div>
+                </div>
+            `;
+            userList.appendChild(userDiv);
+
+            document.getElementById(`user-toggle-${index}`).addEventListener('change', (e) => {
+                toggleUserAccess(index, e.target.checked);
+            });
+        }
+    });
+}
+
+function toggleUserAccess(index, isAllowed) {
+    users[index].isAllowed = isAllowed;
+    localStorage.setItem('users', JSON.stringify(users));
+}
+
 function logout() {
     localStorage.removeItem('currentUser');
     window.location.href = 'login.html';
 }
-

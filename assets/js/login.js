@@ -15,6 +15,11 @@ function handleLogin(e) {
     const user = users.find(u => u.username === username && u.password === password && u.role === role);
 
     if (user) {
+        if (role === 'user' && !user.isAllowed) {
+            alert('You are not authorized to give the test. Please contact the admin.');
+            return;
+        }
+
         localStorage.setItem('currentUser', JSON.stringify(user));
         alert('Login successful!');
         if (role === 'user') {
@@ -26,4 +31,3 @@ function handleLogin(e) {
         alert('Invalid credentials. Please try again.');
     }
 }
-
