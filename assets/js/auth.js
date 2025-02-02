@@ -7,3 +7,4 @@ function checkAuth() {
 
 document.addEventListener('DOMContentLoaded', checkAuth);
 
+
