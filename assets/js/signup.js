@@ -21,8 +21,8 @@ function handleSignup(e) {
         return;
     }
 
-    if (role === 'admin' && !isValidAdminPassword(password)) {
-        alert('Admin password should include at least 1 uppercase letter, 1 lowercase letter, 1 number, and be at least 8 characters long.');
+    if (role === 'admin' && password.length < 6) {
+        alert('Admin password should be at least 6 characters long.');
         return;
     }
 
@@ -36,9 +36,4 @@ function handleSignup(e) {
     localStorage.setItem('users', JSON.stringify(users));
     alert('Sign-up successful! Please log in.');
     window.location.href = 'login.html';
-}
-
-function isValidAdminPassword(password) {
-    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-    return regex.test(password);
 }
